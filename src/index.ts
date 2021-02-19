@@ -345,41 +345,41 @@ interface ILintError {
  * Check a raw dialog script for errors
  * @param code
  */
-export function lint (code: string): Array<ILintError> {
+export function lint (code: string): ILintError[] {
   const out = []
-  code.split("\n").forEach((t, index) => {
-    let errorMessage = ""
+  code.split('\n').forEach((t, index) => {
+    let errorMessage = ''
     try {
       // Comment
-      if (t.startsWith("# ")) {
-        t = ""
+      if (t.startsWith('# ')) {
+        t = ''
       }
       // Conditional
-      if (t.startsWith("[if ")) {
-        errorMessage = "Malformed conditional";
-        const [match, condition] = t.match(/\[if (.*?)\]/);
-        t = t.replace(match, "").trim();
+      if (t.startsWith('[if ')) {
+        errorMessage = 'Malformed conditional'
+        const [match, condition] = t.match(/\[if (.*?)\]/)
+        t = t.replace(match, '').trim()
       }
       // Mutation
-      if (t.startsWith("[do ")) {
-        errorMessage = "Malformed mutation";
-        const [match, mutation] = t.match(/\[do (.*?)\]/);
-        t = t.replace(match, "").trim();
+      if (t.startsWith('[do ')) {
+        errorMessage = 'Malformed mutation'
+        const [match, mutation] = t.match(/\[do (.*?)\]/)
+        t = t.replace(match, '').trim()
       }
       // Dialog
-      if (t.includes(":")) {
-        errorMessage = "Malformed dialogue";
-        const [match, character, dialogue] = t.match(/(.*?):\s?(.*?)$/);
-        t = t.replace(match, "").trim();
+      if (t.includes(':')) {
+        errorMessage = 'Malformed dialogue'
+        const [match, character, dialogue] = t.match(/(.*?):\s?(.*?)$/)
+        t = t.replace(match, '').trim()
       }
-      if (t.includes("->")) {
-        errorMessage = "Malformed redirection";
-        const [match, gotoNodeName] = t.match(/\s?->\s?(.*?)$/);
-        t = t.replace(match, "").trim();
+      if (t.includes('->')) {
+        errorMessage = 'Malformed redirection'
+        const [match, gotoNodeName] = t.match(/\s?->\s?(.*?)$/)
+        t = t.replace(match, '').trim()
       }
-    } catch(e) {
+    } catch (e) {
       // TODO: always setting character to 0, since begining of line triggers it...
-      out.push({ character:0, line: index+1, message: errorMessage})
+      out.push({ character: 0, line: index + 1, message: errorMessage })
     }
   })
   return out
@@ -390,7 +390,7 @@ export function lint (code: string): Array<ILintError> {
  * Pretty-print a raw dialog script on console
  * @param code
  */
-export function prettyprint (code:string): void {
+export function prettyprint (code: string): void {
   console.log(
     code
       .replace(/# (.+)/g, chalk.grey('# $1'))
@@ -399,5 +399,5 @@ export function prettyprint (code:string): void {
       .replace(/\[if (.+)\]/g, chalk.red.inverse('if $1'))
       .replace(/(.+) -> (?!END)(.+)/g, `${chalk.yellow('$1')} -> ${chalk.underline.white('$2')}`)
       .replace(/(.+) -> END/g, `${chalk.yellow('$1')} -> ${chalk.grey('end conversation')}`)
-    )
+  )
 }
