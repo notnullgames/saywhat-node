@@ -341,21 +341,51 @@ interface ILintError {
   character: number
 }
 
-interface ILintResponse {
-  project: IProject
-  errors: ILintError[]
-}
-
-// TODO: look at https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/nodeParser.ts#L22-L84
 /**
  * Check a raw dialog script for errors
  * @param code
  */
-export function lint (code: string): ILintResponse {
-  return { project: null, errors: [] }
+export function lint (code: string): Array<ILintError> {
+  const out = []
+  code.split("\n").forEach((t, index) => {
+    let errorMessage = ""
+    try {
+      // Comment
+      if (t.startsWith("# ")) {
+        t = ""
+      }
+      // Conditional
+      if (t.startsWith("[if ")) {
+        errorMessage = "Malformed conditional";
+        const [match, condition] = t.match(/\[if (.*?)\]/);
+        t = t.replace(match, "").trim();
+      }
+      // Mutation
+      if (t.startsWith("[do ")) {
+        errorMessage = "Malformed mutation";
+        const [match, mutation] = t.match(/\[do (.*?)\]/);
+        t = t.replace(match, "").trim();
+      }
+      // Dialog
+      if (t.includes(":")) {
+        errorMessage = "Malformed dialogue";
+        const [match, character, dialogue] = t.match(/(.*?):\s?(.*?)$/);
+        t = t.replace(match, "").trim();
+      }
+      if (t.includes("->")) {
+        errorMessage = "Malformed redirection";
+        const [match, gotoNodeName] = t.match(/\s?->\s?(.*?)$/);
+        t = t.replace(match, "").trim();
+      }
+    } catch(e) {
+      // TODO: always setting character to 0, since begining of line triggers it...
+      out.push({ character:0, line: index+1, message: errorMessage})
+    }
+  })
+  return out
 }
 
-// TODO: should I actually parse the code, then format it? Regex seems fragile...
+// TODO: should I actually parse the code, then re-format it? Regex seems fragile...
 /**
  * Pretty-print a raw dialog script on console
  * @param code

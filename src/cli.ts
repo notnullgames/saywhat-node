@@ -138,7 +138,7 @@ const argv = yargs
   },
   async (argv) => {
     const script = await getScript(argv)
-    const { project, errors } = lint(script)
+    const errors = lint(script)
     if (errors.length == 0) {
       if (argv.pretty) {
         prettyprint(script)
