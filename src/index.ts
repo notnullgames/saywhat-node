@@ -1,22 +1,11 @@
+import { v4 as uuid } from "uuid";
+
 // https://github.com/nathanhoad/SayWhat/blob/master/types.ts
-import { IProject, INodeLine } from '../types'
+import { IProject, INode, INodeLine } from '../types'
+import { keyBy } from "./util";
+import { textToLines, linesToText, textToResponses, responsesToText } from './nodeParser'
 
-// https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/util.ts
-/**
- * Convert an array of objects to an object using keys from the items
- * @param key
- * @param array
- */
-export function keyBy<T> (key: string, array: T[]): { [key: string]: T } {
-  if (!array) return {}
-
-  const map: any = {}
-  array.forEach((item: any) => {
-    map[item[key]] = item
-  })
-
-  return map
-}
+export { textToLines, linesToText, textToResponses, responsesToText }
 
 // https://github.com/nathanhoad/SayWhat/blob/master/main/export.ts
 const XML_DEC = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -327,4 +316,20 @@ export function getType (line: INodeLine): INodeLineType {
   if (line.mutation) return 'mutation'
   if (line.goToNodeId) return 'goto'
   return 'dialogue'
+}
+
+/**
+ * Compile raw dialog script into sequence
+ * @param code
+ */
+export function compile(code: string, name:string = "", id:string = uuid(), otherNodes:Array<INode> = []): INode {
+  const lines = textToLines(code, otherNodes)
+  const responses = textToResponses(code, otherNodes)
+  return {
+      id,
+      updatedAt: new Date(),
+      name,
+      lines,
+      responses
+  }
 }
