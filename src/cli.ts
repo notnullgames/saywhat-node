@@ -1,47 +1,49 @@
-import { projectToXml, projectToResx, projectToJson, projectToTres, getType, compile } from './index'
+import { projectToXml, projectToResx, projectToJson, projectToTres, getType, compile, lint, prettyprint } from './index'
 
 import { v4 as uuid } from 'uuid'
 import yargs, { Argv } from 'yargs'
 import { promises as fs } from 'fs'
+import chalk from 'chalk'
+import supportsColor from 'supports-color'
 
 // do the actual output, once you've got a parsed project
-async function handleOutput(project, argv ) {
-    // default to JSON
-    if (!argv.xml && !argv.json && !argv.resx && !argv.tres) {
-      argv.json = true
+async function handleOutput (project, argv) {
+  // default to JSON
+  if (!argv.xml && !argv.json && !argv.resx && !argv.tres) {
+    argv.json = true
+  }
+  if (argv.json) {
+    if (argv.write) {
+      await fs.writeFile(argv.write, projectToJson(project))
+    } else {
+      console.log(projectToJson(project, 2))
     }
-    if (argv.json) {
-      if (argv.write) {
-        await fs.writeFile(argv.write, projectToJson(project))
-      } else {
-        console.log(projectToJson(project, 2))
-      }
-    } else if (argv.xml) {
-      const out = projectToXml(project)
-      if (argv.write) {
-        await fs.writeFile(argv.write, out)
-      } else {
-        console.log(out)
-      }
-    } else if (argv.resx) {
-      const out = projectToResx(project)
-      if (argv.write) {
-        await fs.writeFile(argv.write, out)
-      } else {
-        console.log(out)
-      }
-    } else if (argv.tres) {
-      const out = projectToTres(project)
-      if (argv.write) {
-        await fs.writeFile(argv.write, out)
-      } else {
-        console.log(out)
-      }
+  } else if (argv.xml) {
+    const out = projectToXml(project)
+    if (argv.write) {
+      await fs.writeFile(argv.write, out)
+    } else {
+      console.log(out)
     }
+  } else if (argv.resx) {
+    const out = projectToResx(project)
+    if (argv.write) {
+      await fs.writeFile(argv.write, out)
+    } else {
+      console.log(out)
+    }
+  } else if (argv.tres) {
+    const out = projectToTres(project)
+    if (argv.write) {
+      await fs.writeFile(argv.write, out)
+    } else {
+      console.log(out)
+    }
+  }
 }
 
 // get input script from stdin/file (based on argv)
-async function getScript(argv){
+async function getScript (argv) {
   let script
   if (argv.sequence_file == null) {
     const chunks = []
@@ -56,7 +58,7 @@ async function getScript(argv){
 }
 
 // adds options for output, based on argv
-function addOutputOptions(y){
+function addOutputOptions (y) {
   y.option('json', {
     alias: 'j',
     type: 'boolean',
@@ -89,7 +91,6 @@ function addOutputOptions(y){
   return y
 }
 
-
 const argv = yargs
   .command('$0 <project_file>', 'Process a SayWhat project-file', (y) => {
     addOutputOptions(y)
@@ -103,7 +104,7 @@ const argv = yargs
     const project = JSON.parse((await fs.readFile(file)).toString())
     await handleOutput(project, argv)
   })
-  
+
   .command('compile [sequence_file]', 'Compile a sequence from file/stdin', (y) => {
     addOutputOptions(y)
     y.example('$0 compile dialog.seq', 'Compile dialog.seq')
@@ -111,16 +112,16 @@ const argv = yargs
   },
   async (argv) => {
     const project = {
-        savedWithVersion: 1.7,
-        sequences: [
-          {
-            id: uuid(),
-            updatedAt: new Date(),
-            name: 'Generated Sequence',
-            nodes: [compile(await getScript(argv))]
-          }
-        ]
-      }
+      savedWithVersion: 1.7,
+      sequences: [
+        {
+          id: uuid(),
+          updatedAt: new Date(),
+          name: 'Generated Sequence',
+          nodes: [compile(await getScript(argv))]
+        }
+      ]
+    }
     await handleOutput(project, argv)
   })
 
@@ -130,11 +131,6 @@ const argv = yargs
       alias: 'p',
       description: 'Pretty-print the dialog on success'
     })
-    y.option('node', {
-      alias: 'n',
-      type: 'string',
-      description: 'Check just a single node (by ID)'
-    })
     y.example('$0 lint dialog.seq', 'Check the syntax of dialog.seq')
     y.example('cat dialog.seq | $0 lint', 'Another way to check the syntax of dialog.seq')
     y.example('$0 lint -p dialog.seq', 'Check the syntax of dialog.seq and output pretty colored representation of it')
@@ -142,7 +138,27 @@ const argv = yargs
   },
   async (argv) => {
     const script = await getScript(argv)
-
+    const { project, errors } = lint(script)
+    if (errors.length == 0) {
+      if (argv.pretty) {
+        prettyprint(script)
+      }
+    } else {
+      // display messages like eslint does
+      if (supportsColor.stdout) {
+        if (argv.sequence_file) {
+          console.log(chalk.white.underline(argv.sequence_file))
+        }
+        for (const { line, character, message } of errors) {
+          console.log(`\t${chalk.grey(`${line}:${character}`)}\t${chalk.red('error')}\t${chalk.white(message)}`)
+        }
+      } else {
+        console.log(argv.sequence_file)
+        for (const { line, character, message } of errors) {
+          console.log(`\t${line}:${character}\terror\t${message}`)
+        }
+      }
+    }
   })
 
   .example('$0 compile --help', 'Get help with options for compiling')

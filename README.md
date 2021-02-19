@@ -25,7 +25,7 @@ Options:
       --version            Show version number                         [boolean]
   -j, --json               Export JSON                                 [boolean]
   -x, --xml                Export XML                                  [boolean]
-  -r, --resex              Export ResX                                 [boolean]
+  -r, --resx               Export ResX                                 [boolean]
   -t, -g, --tres, --godot  Export Godot resource                       [boolean]
   -w, --write              Save the output to a file                    [string]
 

@@ -52,9 +52,9 @@ test('compile', async () => {
     savedWithVersion: 1.7,
     sequences: [
       {
-        id: "204fea5f-6ebf-4252-b0ef-6052e50781c4",
+        id: '204fea5f-6ebf-4252-b0ef-6052e50781c4',
         updatedAt: new Date(),
-        name: "Example Sequence",
+        name: 'Example Sequence',
         nodes: [compile(testCode)]
       }
     ]

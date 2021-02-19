@@ -1,8 +1,9 @@
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid'
+import chalk from 'chalk'
 
 // https://github.com/nathanhoad/SayWhat/blob/master/types.ts
 import { IProject, INode, INodeLine } from '../types'
-import { keyBy } from "./util";
+import { keyBy } from './util'
 import { textToLines, linesToText, textToResponses, responsesToText } from './nodeParser'
 
 export { textToLines, linesToText, textToResponses, responsesToText }
@@ -322,43 +323,51 @@ export function getType (line: INodeLine): INodeLineType {
  * Compile raw dialog script into sequence
  * @param code
  */
-export function compile(code: string, name:string = "", id:string = uuid(), otherNodes:Array<INode> = []): INode {
+export function compile (code: string, name: string = '', id: string = uuid(), otherNodes: INode[] = []): INode {
   const lines = textToLines(code, otherNodes)
   const responses = textToResponses(code, otherNodes)
   return {
-      id,
-      updatedAt: new Date(),
-      name,
-      lines,
-      responses
+    id,
+    updatedAt: new Date(),
+    name,
+    lines,
+    responses
   }
 }
 
 interface ILintError {
-  message: string,
-  line: number,
+  message: string
+  line: number
   character: number
 }
 
 interface ILintResponse {
-  project: IProject,
-  errors: Array<ILintError>
+  project: IProject
+  errors: ILintError[]
 }
-
 
 // TODO: look at https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/nodeParser.ts#L22-L84
 /**
  * Check a raw dialog script for errors
  * @param code
  */
-export function lint(code: string):ILintResponse {
+export function lint (code: string): ILintResponse {
   return { project: null, errors: [] }
 }
 
-// TODO: look at https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/nodeParser.ts#L90-L106
+// TODO: should I actually parse the code, then format it? Regex seems fragile...
 /**
- * Pretty-print raw dialog script on console
+ * Pretty-print a raw dialog script on console
  * @param code
  */
-export function prettyprint(project: IProject):void {
+export function prettyprint (code:string): void {
+  console.log(
+    code
+      .replace(/# (.+)/g, chalk.grey('# $1'))
+      .replace(/(.+): (.+)/g, chalk.bold.white('$1: ') + chalk.white('$2'))
+      .replace(/\[do (.+)\]/g, chalk.green.inverse('do $1'))
+      .replace(/\[if (.+)\]/g, chalk.red.inverse('if $1'))
+      .replace(/(.+) -> (?!END)(.+)/g, `${chalk.yellow('$1')} -> ${chalk.underline.white('$2')}`)
+      .replace(/(.+) -> END/g, `${chalk.yellow('$1')} -> ${chalk.grey('end conversation')}`)
+    )
 }
