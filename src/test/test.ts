@@ -15,16 +15,6 @@ declare interface Baretest {
 
 const test: Baretest = baretest('SayWhat')
 
-const testCode = `
-Character: Hello!
-[if has_met_character] Character: It's nice to meet you.
-# This is a comment
-[do has_met_character = true]
-
-Can you repeat that? -> Start
-That's all for now -> END
-`
-
 test('Should have unit tests', () => {
   assert.ok(projectToXml)
   assert.ok(projectToResx)
@@ -56,7 +46,8 @@ test('projectToTres', async () => {
   assert.ok(underTest)
 })
 
-test('compile', () => {
+test('compile', async () => {
+  const testCode = await fs.readFile(`${__dirname}/test.dialog`).toString()
   const project = {
     savedWithVersion: 1.7,
     sequences: [

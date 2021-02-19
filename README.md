@@ -15,15 +15,23 @@ saywhat <project_file>
 
 Process a SayWhat project-file
 
+Commands:
+  cli.ts compile [project_file]  Compile a sequence for a dialog script
+  cli.ts <project_file>          Process a SayWhat project-file        [default]
+
 Options:
-    --help               Show help                                   [boolean]
-    --version            Show version number                         [boolean]
+      --help               Show help                                   [boolean]
+      --version            Show version number                         [boolean]
   -j, --json               Export JSON                                 [boolean]
   -x, --xml                Export XML                                  [boolean]
   -r, --resex              Export ResX                                 [boolean]
   -t, -g, --tres, --godot  Export Godot resource                       [boolean]
   -w, --write              Save the output to a file                    [string]
+
 ```
+
+`compile` can also compile stdin, if no `project_file` is provided.
+
 
 ## Code
 
@@ -67,7 +75,7 @@ You can also compile raw dialog-script into a project:
 
 ```js
 import { compile, projectToJson } from 'saywhat-parse'
-import { v4 as uuid } from "uuid"
+import { v4 as uuid } from 'uuid'
 
 const script = `
 Character: Hello!
