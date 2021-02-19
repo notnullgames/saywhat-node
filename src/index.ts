@@ -346,6 +346,7 @@ interface ILintResponse {
 }
 
 
+// TODO: look at https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/nodeParser.ts#L22-L84
 /**
  * Check a raw dialog script for errors
  * @param code
@@ -354,6 +355,7 @@ export function lint(code: string):ILintResponse {
   return { project: null, errors: [] }
 }
 
+// TODO: look at https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/nodeParser.ts#L90-L106
 /**
  * Pretty-print raw dialog script on console
  * @param code
