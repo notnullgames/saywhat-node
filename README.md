@@ -16,8 +16,9 @@ saywhat <project_file>
 Process a SayWhat project-file
 
 Commands:
-  cli.ts compile [project_file]  Compile a sequence for a dialog script
-  cli.ts <project_file>          Process a SayWhat project-file        [default]
+  saywhat <project_file>           Process a SayWhat project-file       [default]
+  saywhat compile [sequence_file]  Compile a sequence from file/stdin
+  saywhat lint [sequence_file]     Check the syntax of sequence from file/stdin
 
 Options:
       --help               Show help                                   [boolean]
@@ -28,12 +29,15 @@ Options:
   -t, -g, --tres, --godot  Export Godot resource                       [boolean]
   -w, --write              Save the output to a file                    [string]
 
+Examples:
+  saywhat compile --help  Get help with options for compiling
+  saywhat lint --help     Get help with options for syntax-checking
 ```
 
-`compile` can also compile stdin, if no `project_file` is provided, for example:
+`compile`/`lint` can also compile stdin, if no `sequence_file` is provided, for example:
 
 ```sh
-cat src/test/test.dialog | saywhat compile
+cat src/test/test.seq | saywhat compile
 ```
 
 
@@ -83,7 +87,7 @@ import { v4 as uuid } from 'uuid'
 
 const script = `
 Character: Hello!
-[if has_met_character] Character: It's nice to meet you.
+[if !has_met_character] Character: It's nice to meet you.
 # This is a comment
 [do has_met_character = true]
 

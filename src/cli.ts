@@ -7,7 +7,7 @@ import { promises as fs } from 'fs'
 // do the actual output, once you've got a parsed project
 async function handleOutput(project, argv ) {
     // default to JSON
-    if (!argv.xml && !argv.json && !argv.resex && !argv.tres) {
+    if (!argv.xml && !argv.json && !argv.resx && !argv.tres) {
       argv.json = true
     }
     if (argv.json) {
@@ -23,7 +23,7 @@ async function handleOutput(project, argv ) {
       } else {
         console.log(out)
       }
-    } else if (argv.resex) {
+    } else if (argv.resx) {
       const out = projectToResx(project)
       if (argv.write) {
         await fs.writeFile(argv.write, out)
@@ -61,15 +61,15 @@ function addOutputOptions(y){
     alias: 'j',
     type: 'boolean',
     description: 'Export JSON',
-    conflicts: ['xml', 'resex', 'tres']
+    conflicts: ['xml', 'resx', 'tres']
   })
   y.option('xml', {
     alias: 'x',
     type: 'boolean',
     description: 'Export XML',
-    conflicts: ['json', 'resex', 'tres']
+    conflicts: ['json', 'resx', 'tres']
   })
-  y.option('resex', {
+  y.option('resx', {
     alias: 'r',
     type: 'boolean',
     description: 'Export ResX',
@@ -79,7 +79,7 @@ function addOutputOptions(y){
     alias: ['t', 'godot', 'g'],
     type: 'boolean',
     description: 'Export Godot resource',
-    conflicts: ['xml', 'json', 'resex']
+    conflicts: ['xml', 'json', 'resx']
   })
   y.option('write', {
     alias: 'w',
