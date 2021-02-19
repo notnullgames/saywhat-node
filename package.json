@@ -1,7 +1,7 @@
 {
   "name": "saywhat-parse",
   "version": "0.0.0",
-  "description": "Library for parsing SayWhat text and project-files, and turning it into other formats",
+  "description": "Library/CLI-tool for parsing SayWhat text and project-files, and turning it into other formats",
   "main": "dist/index.js",
   "bin": {
     "saywhat": "dist/cli.js"
