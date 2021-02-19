@@ -138,7 +138,7 @@ const argv = yargs
     y.example('$0 lint dialog.seq', 'Check the syntax of dialog.seq')
     y.example('cat dialog.seq | $0 lint', 'Another way to check the syntax of dialog.seq')
     y.example('$0 lint -p dialog.seq', 'Check the syntax of dialog.seq and output pretty colored representation of it')
-    y.example('$0 lint -n edf56d32-7c17-467d-ba7a-6fe710bd74f4 dialog.seq', 'only check edf56d32-7c17-467d-ba7a-6fe710bd74f4')
+    y.example('$0 lint -n edf56d32-7c17-467d-ba7a-6fe710bd74f4 dialog.seq', 'only check node edf56d32-7c17-467d-ba7a-6fe710bd74f4')
   },
   async (argv) => {
     const script = await getScript(argv)
