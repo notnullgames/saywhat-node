@@ -30,7 +30,11 @@ Options:
 
 ```
 
-`compile` can also compile stdin, if no `project_file` is provided.
+`compile` can also compile stdin, if no `project_file` is provided, for example:
+
+```sh
+cat src/test/test.dialog | saywhat compile
+```
 
 
 ## Code
