@@ -60,3 +60,8 @@ async function main () {
 }
 main()
 ```
+
+## TODO
+
+- Provide function to turn raw dialogue into project
+- Provide linting function to check a raw dialogue
