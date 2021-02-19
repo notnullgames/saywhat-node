@@ -10,7 +10,8 @@
     "build": "tsc",
     "prepublish": "npm run build",
     "test": "ts-node src/test/test.ts",
-    "lint": "ts-standard --fix"
+    "lint": "ts-standard --fix",
+    "test:cli": "ts-node src/cli.ts --xml src/test/text.saywhat && ts-node src/cli.ts --json  src/test/text.saywhat && ts-node src/cli.ts --resex src/test/text.saywhat && ts-node src/cli.ts --tres src/test/text.saywhat"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
   "homepage": "https://github.com/notnullgames/saywhat-node#readme",
   "devDependencies": {
     "@types/node": "^14.14.30",
+    "@types/yargs": "^16.0.0",
     "baretest": "^2.0.0",
     "ts-node": "^9.1.1",
     "ts-standard": "^10.0.0",

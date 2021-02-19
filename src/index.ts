@@ -1,5 +1,8 @@
+// https://github.com/nathanhoad/SayWhat/blob/master/types.ts
 import { IProject, INodeLine } from '../types'
 
+
+// https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/util.ts
 /**
  * Convert an array of objects to an object using keys from the items
  * @param key
@@ -16,7 +19,7 @@ export function keyBy<T>(key: string, array: Array<T>): { [key: string]: T } {
   return map;
 }
 
-
+// https://github.com/nathanhoad/SayWhat/blob/master/main/export.ts
 const XML_DEC = '<?xml version="1.0" encoding="UTF-8"?>\n'
 
 /**
@@ -167,7 +170,7 @@ interface IExportedNode {
   }>
 }
 
-export function projectToJson (project: IProject): string {
+export function projectToJson (project: IProject, indent = 0): string {
   const exportedSequences = keyBy(
     'id',
     project.sequences.map(sequence => {
@@ -226,7 +229,7 @@ export function projectToJson (project: IProject): string {
     })
   )
 
-  return JSON.stringify(exportedSequences)
+  return JSON.stringify(exportedSequences, null, indent)
 }
 
 interface IGodotLine {
