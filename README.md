@@ -67,6 +67,7 @@ You can also compile raw dialog-script into a project:
 
 ```js
 import { compile, projectToJson } from 'saywhat-parse'
+import { v4 as uuid } from "uuid"
 
 const script = `
 Character: Hello!
@@ -82,8 +83,8 @@ const project = {
   savedWithVersion: 1.7,
   sequences: [
     {
-      id: '204fea5f-6ebf-4252-b0ef-6052e50781c4',
-      updatedAt: '2021-02-19T03:00:54.874Z',
+      id: uuid(),
+      updatedAt: new Date(),
       name: 'Example Sequence',
       nodes: [compile(script)]
     }
