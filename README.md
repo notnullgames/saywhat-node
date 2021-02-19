@@ -1,2 +1,3 @@
-# saywhat-node
-Library for parsing SayWhat text, and turning it into other formats
+# saywhat-parse
+
+Library for parsing [SayWhat](https://github.com/nathanhoad/SayWhat) text, and turning it into other formats.
