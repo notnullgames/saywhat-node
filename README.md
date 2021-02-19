@@ -10,29 +10,13 @@ Library/CLI-tool for parsing [SayWhat](https://github.com/nathanhoad/SayWhat) te
 
 ## CLI
 
+Run help to get help:
+
+```sh
+saywhat --help
 ```
-saywhat <project_file>
 
-Process a SayWhat project-file
-
-Commands:
-  saywhat <project_file>           Process a SayWhat project-file       [default]
-  saywhat compile [sequence_file]  Compile a sequence from file/stdin
-  saywhat lint [sequence_file]     Check the syntax of sequence from file/stdin
-
-Options:
-      --help               Show help                                   [boolean]
-      --version            Show version number                         [boolean]
-  -j, --json               Export JSON                                 [boolean]
-  -x, --xml                Export XML                                  [boolean]
-  -r, --resx               Export ResX                                 [boolean]
-  -t, -g, --tres, --godot  Export Godot resource                       [boolean]
-  -w, --write              Save the output to a file                    [string]
-
-Examples:
-  saywhat compile --help  Get help with options for compiling
-  saywhat lint --help     Get help with options for syntax-checking
-```
+There are a lot of options.
 
 `compile`/`lint` can also compile stdin, if no `sequence_file` is provided, for example, this will print a colorized version of your file:
 
@@ -40,6 +24,12 @@ Examples:
 cat src/test/test.seq | saywhat lint -p
 ```
 
+They also support multiple files:
+
+```sh
+cli.ts compile dialogs/*.txt -g -w
+cli.ts lint --pretty dialogs/*.txt
+```
 
 ## Code
 
@@ -102,9 +92,11 @@ const project = {
       id: uuid(),
       updatedAt: new Date(),
       name: 'Example Sequence',
-      nodes: [compile(script)]
+      nodes: [
+        // add more here, if you have multiple scripts
+        compile(script, "My Node")
+      ]
     }
-    // you can add more sequences here
   ]
 }
 

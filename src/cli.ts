@@ -140,6 +140,7 @@ const argv = yargs
     })
     y.example('$0 compile dialog.seq', 'Compile dialog.seq')
     y.example('cat dialog.seq | $0 compile', 'Another way to compile dialog.seq')
+    y.example('$0 compile dialogs/*.txt -g -w dialogs.tres', 'Compile a bunch of files into a Godot resource')
   },
   async (argv: Arguments) => {
     // default to project
