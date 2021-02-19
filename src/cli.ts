@@ -88,10 +88,9 @@ const argv = yargs
           {
             id: uuid(),
             updatedAt: new Date(),
-            name: 'Example Sequence',
+            name: 'Generated Sequence',
             nodes: [compile(script)]
           }
-          // you can add more sequences here
         ]
       }
     await handleOutput(project, argv)
