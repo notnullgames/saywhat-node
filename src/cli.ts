@@ -43,12 +43,12 @@ async function handleOutput(project, argv ) {
 // get input script from stdin/file (based on argv)
 async function getScript(argv){
   let script
-  if (argv.project_file == null) {
+  if (argv.sequence_file == null) {
     const chunks = []
     for await (const chunk of process.stdin) chunks.push(chunk)
     script = Buffer.concat(chunks).toString('utf8')
   } else {
-    const file = String(argv.project_file)
+    const file = String(argv.sequence_file)
     await fs.access(file)
     script = (await fs.readFile(file)).toString()
   }
@@ -104,7 +104,7 @@ const argv = yargs
     await handleOutput(project, argv)
   })
   
-  .command('compile [project_file]', 'Compile a sequence from file/stdin', (y) => {
+  .command('compile [sequence_file]', 'Compile a sequence from file/stdin', (y) => {
     addOutputOptions(y)
     y.example('$0 compile dialog.seq', 'Compile dialog.seq')
     y.example('cat dialog.seq | $0 compile', 'Another way to compile dialog.seq')
@@ -124,7 +124,7 @@ const argv = yargs
     await handleOutput(project, argv)
   })
 
-  .command('lint [project_file]', 'Check the syntax of sequence from file/stdin', (y) => {
+  .command('lint [sequence_file]', 'Check the syntax of sequence from file/stdin', (y) => {
     y.option('pretty', {
       type: 'boolean',
       alias: 'p',
@@ -142,6 +142,7 @@ const argv = yargs
   },
   async (argv) => {
     const script = await getScript(argv)
+
   })
 
   .example('$0 compile --help', 'Get help with options for compiling')

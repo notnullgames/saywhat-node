@@ -333,3 +333,30 @@ export function compile(code: string, name:string = "", id:string = uuid(), othe
       responses
   }
 }
+
+interface ILintError {
+  message: string,
+  line: number,
+  character: number
+}
+
+interface ILintResponse {
+  project: IProject,
+  errors: Array<ILintError>
+}
+
+
+/**
+ * Check a raw dialog script for errors
+ * @param code
+ */
+export function lint(code: string):ILintResponse {
+  return { project: null, errors: [] }
+}
+
+/**
+ * Pretty-print raw dialog script on console
+ * @param code
+ */
+export function prettyprint(project: IProject):void {
+}
