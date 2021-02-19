@@ -109,4 +109,4 @@ console.log(projectToJson(project, 2))
 
 ## TODO
 
-- Provide linting function to check a raw dialogue
+- Provide linting function to check a raw dialogue with option for display
