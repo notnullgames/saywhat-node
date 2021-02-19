@@ -34,10 +34,10 @@ Examples:
   saywhat lint --help     Get help with options for syntax-checking
 ```
 
-`compile`/`lint` can also compile stdin, if no `sequence_file` is provided, for example:
+`compile`/`lint` can also compile stdin, if no `sequence_file` is provided, for example, this will print a colorized version of your file:
 
 ```sh
-cat src/test/test.seq | saywhat compile
+cat src/test/test.seq | saywhat lint -p
 ```
 
 
