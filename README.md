@@ -8,6 +8,9 @@ Library/CLI-tool for parsing [SayWhat](https://github.com/nathanhoad/SayWhat) te
 - You can run it without installing it with `npx saywhat-parse`
 - You can install it in your project with `npm i saywhat-parse`
 
+If you just want the CLI, and don't use node, I built some standalone binaries of the CLI in [releases](https://github.com/notnullgames/saywhat-node/releases).
+
+
 ## CLI
 
 Run help to get help:
