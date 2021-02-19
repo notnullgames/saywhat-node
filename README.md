@@ -27,7 +27,7 @@ cat src/test/test.seq | saywhat lint -p
 They also support multiple files:
 
 ```sh
-cli.ts compile dialogs/*.txt -g -w
+cli.ts compile dialogs/*.txt -g -w dialogs.tres
 cli.ts lint --pretty dialogs/*.txt
 ```
 
