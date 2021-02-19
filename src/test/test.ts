@@ -47,7 +47,7 @@ test('projectToTres', async () => {
 })
 
 test('compile', async () => {
-  const testCode = await fs.readFile(`${__dirname}/test.dialog`).toString()
+  const testCode = await fs.readFile(`${__dirname}/test.seq`).toString()
   const project = {
     savedWithVersion: 1.7,
     sequences: [

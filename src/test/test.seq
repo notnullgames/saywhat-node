@@ -1,6 +1,8 @@
+# this is a single sequence
+
 Character: Hello!
-[if has_met_character] Character: It's nice to meet you.
-# This is a comment
+[if !has_met_character] Character: It's nice to meet you.
+
 [do has_met_character = true]
 
 Can you repeat that? -> Start
