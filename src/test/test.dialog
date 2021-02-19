@@ -1,0 +1,7 @@
+Character: Hello!
+[if has_met_character] Character: It's nice to meet you.
+# This is a comment
+[do has_met_character = true]
+
+Can you repeat that? -> Start
+That's all for now -> END
