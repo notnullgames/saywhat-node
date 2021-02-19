@@ -1,7 +1,7 @@
 import baretest from 'baretest'
 import assert from 'assert'
 
-import { projectToXml, projectToResx, projectToJson, projectToTres, getType, keyBy } from '../index'
+import { projectToXml, projectToResx, projectToJson, projectToTres } from '../index'
 import { promises as fs } from 'fs'
 
 declare interface Baretest {
@@ -20,8 +20,6 @@ test('Should have unit tests', () => {
   assert.ok(projectToResx)
   assert.ok(projectToJson)
   assert.ok(projectToTres)
-  assert.ok(getType)
-  assert.ok(keyBy)
 })
 
 test('projectToXml', async () => {
@@ -47,6 +45,5 @@ test('projectToTres', async () => {
   const underTest = projectToTres(project)
   assert.ok(underTest)
 })
-
 
 test.run()

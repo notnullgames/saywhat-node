@@ -1,22 +1,21 @@
 // https://github.com/nathanhoad/SayWhat/blob/master/types.ts
 import { IProject, INodeLine } from '../types'
 
-
 // https://github.com/nathanhoad/SayWhat/blob/master/renderer/lib/util.ts
 /**
  * Convert an array of objects to an object using keys from the items
  * @param key
  * @param array
  */
-export function keyBy<T>(key: string, array: Array<T>): { [key: string]: T } {
-  if (!array) return {};
+export function keyBy<T> (key: string, array: T[]): { [key: string]: T } {
+  if (!array) return {}
 
-  const map: any = {};
+  const map: any = {}
   array.forEach((item: any) => {
-    map[item[key]] = item;
-  });
+    map[item[key]] = item
+  })
 
-  return map;
+  return map
 }
 
 // https://github.com/nathanhoad/SayWhat/blob/master/main/export.ts

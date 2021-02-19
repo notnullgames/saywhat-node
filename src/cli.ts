@@ -3,7 +3,7 @@ import { projectToXml, projectToResx, projectToJson, projectToTres, getType, key
 import yargs, { Argv } from 'yargs'
 import { promises as fs } from 'fs'
 
-let argv = yargs
+const argv = yargs
   .option('json', {
     alias: 'j',
     type: 'boolean',
@@ -40,7 +40,7 @@ let argv = yargs
     const file = String(argv.project_file)
     await fs.access(file)
     const project = JSON.parse((await fs.readFile(file)).toString())
-    
+
     // default to JSON
     if (!argv.xml && !argv.json && !argv.resex && !argv.tres) {
       argv.json = true
