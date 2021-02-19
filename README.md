@@ -1,6 +1,6 @@
 # saywhat-parse
 
-Library for parsing [SayWhat](https://github.com/nathanhoad/SayWhat) text and project-files, and turning it into other formats.
+Library/CLI-tool for parsing [SayWhat](https://github.com/nathanhoad/SayWhat) text and project-files, and turning it into other formats.
 
 ## installation
 
