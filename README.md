@@ -36,6 +36,7 @@ import { promises as fs } from 'fs'
 async function main () {
   // load your project-file as an object
   const project = JSON.parse((await fs.readFile(`${__dirname}/test.saywhat`)).toString())
+  
   console.log(projectToXml(project))
   console.log(projectToResx(project))
   console.log(projectToJson(project))
@@ -53,6 +54,7 @@ const fs = require('fs').promises
 async function main () {
   // load your project-file as an object
   const project = JSON.parse((await fs.readFile(`${__dirname}/test.saywhat`)).toString())
+  
   console.log(projectToXml(project))
   console.log(projectToResx(project))
   console.log(projectToJson(project))
