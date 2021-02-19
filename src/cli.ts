@@ -94,6 +94,9 @@ function addOutputOptions (y) {
 const argv = yargs
   .command('$0 <project_file>', 'Process a SayWhat project-file', (y) => {
     addOutputOptions(y)
+    y.example('$0 dialog.saywhat', 'Output JSON to console')
+    y.example('$0 dialog.saywhat -g -w dialog.tres', 'Output Godot file')
+    y.example('$0 dialog.saywhat -x -w dialog.xml', 'Output XML file')
   },
   async (argv) => {
     if (!argv.project_file) {
