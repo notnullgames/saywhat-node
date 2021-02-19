@@ -11,7 +11,7 @@
     "prepublish": "npm run build",
     "test": "ts-node src/test/test.ts",
     "lint": "ts-standard --fix",
-    "test:cli": "ts-node src/cli.ts --xml src/test/text.saywhat && ts-node src/cli.ts --json  src/test/text.saywhat && ts-node src/cli.ts --resex src/test/text.saywhat && ts-node src/cli.ts --tres src/test/text.saywhat"
+    "test:cli": "ts-node src/cli.ts --xml src/test/test.saywhat -w src/test/test.xml && ts-node src/cli.ts --json  src/test/test.saywhat -w src/test/test.json && ts-node src/cli.ts --resex src/test/test.saywhat -w src/test/test.resex && ts-node src/cli.ts --tres src/test/test.saywhat -w src/test/test.tres"
   },
   "repository": {
     "type": "git",

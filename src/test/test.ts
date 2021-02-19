@@ -2,6 +2,7 @@ import baretest from 'baretest'
 import assert from 'assert'
 
 import { projectToXml, projectToResx, projectToJson, projectToTres, getType, keyBy } from '../index'
+import { promises as fs } from 'fs'
 
 declare interface Baretest {
   (t: string, f: Function): void
@@ -22,5 +23,30 @@ test('Should have unit tests', () => {
   assert.ok(getType)
   assert.ok(keyBy)
 })
+
+test('projectToXml', async () => {
+  const project = JSON.parse((await fs.readFile(`${__dirname}/test.saywhat`)).toString())
+  const underTest = projectToXml(project)
+  assert.ok(underTest)
+})
+
+test('projectToResx', async () => {
+  const project = JSON.parse((await fs.readFile(`${__dirname}/test.saywhat`)).toString())
+  const underTest = projectToResx(project)
+  assert.ok(underTest)
+})
+
+test('projectToJson', async () => {
+  const project = JSON.parse((await fs.readFile(`${__dirname}/test.saywhat`)).toString())
+  const underTest = projectToJson(project)
+  assert.ok(underTest)
+})
+
+test('projectToTres', async () => {
+  const project = JSON.parse((await fs.readFile(`${__dirname}/test.saywhat`)).toString())
+  const underTest = projectToTres(project)
+  assert.ok(underTest)
+})
+
 
 test.run()
